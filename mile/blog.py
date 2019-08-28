@@ -4,14 +4,14 @@ from flask import (
 from werkzeug.exceptions import abort
 
 from mile.auth import login_required
-from mile.dbase import get_db
+from mile.db import get_db
 
 bp = Blueprint('blog', __name__)
 
 @bp.route('/')
 def index():
-    dbase = get_db()
-    posts = dbase.execute(
+    db = get_db()
+    posts = db.execute(
         'SELECT p.id, title, body, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
